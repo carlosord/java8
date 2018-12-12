@@ -2,13 +2,32 @@ package com.example.java8.lambda;
 
 import java.util.Arrays;
 
+/**
+ * The Class FunctionalInterfaces.
+ */
 public class FunctionalInterfaces {
 	
+	/**
+	 * The Interface BinaryMathOperation.
+	 */
 	@FunctionalInterface
 	interface BinaryMathOperation {
+		
+		/**
+		 * Operation.
+		 *
+		 * @param a the a
+		 * @param b the b
+		 * @return the double
+		 */
 		public double operation(double a, double b);
 	}
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String args[]) {
 		
 		BinaryMathOperation sum = (double a, double b) -> a + b;
