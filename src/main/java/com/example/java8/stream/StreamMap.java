@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.example.java8.model.Person;
 
@@ -100,5 +101,15 @@ public class StreamMap {
 			.filter(m -> m.length() < 20)
 			.forEach(System.out::println);
 
+		System.out.println("Update data: update email people with name Jose");
+		Stream<Person> s = people.stream()
+			.filter(p -> p.getName().startsWith("J"))
+			.filter(p -> p.getName().contains("Cuevas"));
+		
+		s.forEach(p -> {
+			System.out.println(p);
+			p.setMail(p.getMail().replace("nomail", "newnomail"));
+			System.out.println(p+"\n");
+		});
 	}
 }
