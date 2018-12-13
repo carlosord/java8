@@ -9,9 +9,16 @@ import java.util.stream.Collectors;
 import com.example.java8.model.Person;
 
 public class StreamMap {
+	
 	/** The Constant FILE. */
 	private static final String FILE = "src/main/resources/data.csv";
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void main(String[] args) throws IOException {
 		
 		List<Person> people = Files.lines(Paths.get(FILE)).map(line -> { 
@@ -19,11 +26,11 @@ public class StreamMap {
 			return new Person(splitedLine[0], splitedLine[1], splitedLine[2], splitedLine[3]);
 		}).collect(Collectors.toList());
 		
-		System.out.println("All names 1");
+		System.out.println("All names 1 (lambda)");
 		people.stream()
 			.map(p -> p.getName()).forEach(System.out::println);
 
-		System.out.println("All names 2");
+		System.out.println("All names 2 (Method reference)");
 		people.stream()
 			.map(Person::getName).forEach(System.out::println);
 
@@ -31,7 +38,7 @@ public class StreamMap {
 		people.stream()
 			.map(p -> p.getBirthday().getDayOfMonth()).forEach(System.out::println);
 
-		System.out.println("Sum od the days of the birdthdays");
+		System.out.println("Sum the days of the birthdays");
 		System.out.println(
 			people.stream()
 				.mapToInt(p -> p.getBirthday().getDayOfMonth()).sum()
@@ -43,11 +50,18 @@ public class StreamMap {
 			.map(p -> p.getName().toUpperCase())
 			.forEach(System.out::println);
 
-		System.out.println("Concat emails");
+		System.out.println("Concat emails (reduce)");
 		System.out.println(
 			people.stream()
-				.map(p -> p.getMail())
+				.map(Person::getMail)
 				.reduce("", (a,b) -> a + ", " + b)
+		);
+		
+		System.out.println("Concat emails (collect)");
+		System.out.println(
+			people.stream()
+				.map(Person::getMail)
+				.collect(Collectors.joining(","))
 		);
 		
 		System.out.println("Years of birthdays");
@@ -60,16 +74,14 @@ public class StreamMap {
 		System.out.println("Car brands 1");
 		people.stream()
 			.flatMap(p -> p.getCars().stream())
-			.map(c -> c.toString())
 			.distinct()
 			.sorted()
 			.forEach(System.out::println);
 
 		System.out.println("Car brands 2");
 		people.stream()
-			.map(p -> p.getCars())
-			.flatMap(c -> c.stream())
-			.map(c -> c.toString())
+			.map(Person::getCars)
+			.flatMap(List::stream)
 			.distinct()
 			.sorted()
 			.forEach(System.out::println);
@@ -88,16 +100,16 @@ public class StreamMap {
 			.entrySet()
             .stream()
             .filter( p -> p.getValue() > 300 )
-            .map( e -> e.getKey())
+            .map(e -> e.getKey())
 			.forEach(System.out::println);
 
-		System.out.println("Two filters: emails with lees than 20 characters of people which name starts with A");
+		System.out.println("Two filters: emails with lees than 20 characters of people which name starts with A and sorted");
 		people.stream()
 			.filter(p -> p.getName().startsWith("A"))
-			.map(p -> p.getMail())
+			.map(Person::getMail)
 			.distinct()
-			.sorted()
 			.filter(m -> m.length() < 20)
+			.sorted()
 			.forEach(System.out::println);
 
 	}

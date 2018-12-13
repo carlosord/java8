@@ -4,17 +4,26 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.example.java8.model.Person;
 
+/**
+ * The Class StreamFilter.
+ */
 public class StreamFilter {
+	
 	/** The Constant FILE. */
 	private static final String FILE = "src/main/resources/data.csv";
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
 	public static void main(String[] args) throws IOException {
 		
 		List<Person> people = Files.lines(Paths.get(FILE)).map(line -> { 
@@ -28,24 +37,22 @@ public class StreamFilter {
 		
 		System.out.println("\\n\\nBirthday year is 2000");
 		people.stream()
-			.filter(p -> p.getBirthday().getYear()==2000)
+			.filter(p -> p.getBirthday().getYear() == 2000)
 			.forEach(System.out::println);
 
 		System.out.println("\\n\\nBirthday is 4 july");
 		people.stream()
-			.filter(p -> p.getBirthday().getMonth().compareTo(Month.JULY)==0)
-			.filter(p -> p.getBirthday().getDayOfMonth()==4)
+			.filter(p -> p.getBirthday().getMonth().compareTo(Month.JULY) == 0)
+			.filter(p -> p.getBirthday().getDayOfMonth() == 4)
 			.forEach(System.out::println);
 
 		//Add emails to array
-		List<String> emails = new ArrayList();
-		people.stream()
-			.filter(p -> p.getBirthday().getMonth().compareTo(Month.JULY)==0)
-			.filter(p -> p.getBirthday().getDayOfMonth()==4)
-			.forEach( c -> {
-				emails.add(c.getMail());
-			}
-		);
+		List<String> emails = people.stream()
+			.filter(p -> p.getBirthday().getMonth().compareTo(Month.JULY) == 0)
+			.filter(p -> p.getBirthday().getDayOfMonth() == 4)
+			.map(Person::getMail)
+			.collect(Collectors.toList());
+		System.out.println(emails);
 		
 		System.out.println("\\n\\nOnly one cars");
 		people.stream()
