@@ -1,8 +1,6 @@
 package com.example.java8.localdatetime;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,21 +10,20 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.stream.Collectors;
 
-import com.example.java8.model.Person;
-
+/**
+ * The Class LocalDateTimeExamples.
+ */
 public class LocalDateTimeExamples {
-	/** The Constant FILE. */
-	private static final String FILE = "src/main/resources/data.csv";
-
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws InterruptedException the interrupted exception
+	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
-		
-		List<Person> people = Files.lines(Paths.get(FILE)).map(line -> { 
-			String[] splitedLine = line.split(";");
-			return new Person(splitedLine[0], splitedLine[1], splitedLine[2], splitedLine[3]);
-		}).collect(Collectors.toList());
 
 		System.out.println("Times");
 		LocalTime timeNow = LocalTime.now();
