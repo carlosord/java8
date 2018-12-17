@@ -64,10 +64,18 @@ public class OptionExample {
 		
 		System.out.println("\n");
 		List<Person> people = loadData();
+		//Must show the first person which name starts with Jose
 		System.out.println("First person of full list: " + getFirstPersonWithName(people, "Jose"));
+		//Mustn't found any person. Should show the message "Not found"
 		System.out.println("First person of empty list: " + getFirstPersonWithName(people, "Pepe"));
-		System.out.println("First person of full list with: " + getFirstPersonWithNameEx(people, "Jose"));
-		System.out.println("First person of empty list: " + getFirstPersonWithNameEx(people, "Pepe"));
+		//Must show the first person which name starts with Jose
+		System.out.println("First person of full list: " + getFirstPersonWithNameEx(people, "Jose"));
+		//Mustn't found any person. Should throw the exception NoSuchElementException
+		try{
+			System.out.println("First person of empty list: " + getFirstPersonWithNameEx(people, "Pepe"));
+		}catch(NoSuchElementException e) {
+			e.printStackTrace();
+		}
 		
 		//Compare
 		Optional<String> actualItem = Optional.of("Pepe");
@@ -75,7 +83,7 @@ public class OptionExample {
 		//assertEquals(expectedItem, actualItem);
 
 		Optional<String> password = Optional.ofNullable("123456789");
-		boolean v = password.filter(s -> s.length() > 8).isPresent();
+		password.filter(s -> s.length() > 8).ifPresent(p -> System.out.println("Password allowed"));
 		
 	}
 	
