@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -101,7 +102,7 @@ public class StreamMap {
 			.entrySet()
             .stream()
             .filter( p -> p.getValue() > 300 )
-            .map(e -> e.getKey())
+            .map(Entry::getKey)
 			.forEach(System.out::println);
 
 		System.out.println("Two filters: emails with lees than 20 characters of people which name starts with A and sorted");

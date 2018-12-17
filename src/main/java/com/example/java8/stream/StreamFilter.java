@@ -48,7 +48,7 @@ public class StreamFilter {
 
 		//Add emails to array
 		List<String> emails = people.stream()
-			.filter(p -> p.getBirthday().getMonth().compareTo(Month.JULY) == 0)
+			.filter(p -> p.getBirthday().getMonth().equals(Month.JULY))
 			.filter(p -> p.getBirthday().getDayOfMonth() == 4)
 			.map(Person::getMail)
 			.collect(Collectors.toList());
