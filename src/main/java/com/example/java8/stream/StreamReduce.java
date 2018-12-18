@@ -55,7 +55,7 @@ public class StreamReduce {
 	  		result *= i;	  	
 	  	System.out.println(result);
 	  		
-	  	System.out.println(ints.parallelStream().reduce(2, (x1, x2) -> x1 + x2, (x,y) -> x * y));
+	  	System.out.println(ints.parallelStream().reduce(2, (x1, x2) -> x1 + x2, (x, y) -> x * y));
   	 
 	  	
 	  	
