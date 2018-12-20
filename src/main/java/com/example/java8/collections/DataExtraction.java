@@ -79,65 +79,37 @@ public class DataExtraction {
 		
 		
 		// Create a map with all names witch starts with "Mario C". The key will be the email, and the value the Cars 1
-		try {
-			people.stream()
-				.filter(p -> p.getName().startsWith("Mario C"))
-				.collect(Collectors.toMap(Person::getMail, Person::getCars))
-				.forEach((k,v) -> System.out.println(k + " => " + v));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		people.stream()
+			.filter(p -> p.getName().startsWith("Mario C"))
+			.collect(Collectors.toMap(Person::getMail, Person::getCars))
+			.forEach((k,v) -> System.out.println(k + " => " + v));
+
 		// Create a map with all names witch starts with "Mario C". The key will be the email, and the value the Cars 2
 		people.stream()
 		.filter(p -> p.getName().startsWith("Mario C"))
         .collect(HashMap::new, (k,v)->k.put(v.getMail(), v.getCars()), HashMap::putAll)
         .forEach((k,v) -> System.out.println(k + " => " + v));
 
-
-
-		// Create a map with all names witch starts with "Mario C". The key will be the name, and the value the Cars
-		//This will throw a exception, for key duplicate
-		try {
-			people.stream()
-				.filter(p -> p.getName().startsWith("Mario C"))
-				.collect(Collectors.toMap(Person::getName, Person::getCars));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-
 		// Create a map with all names witch starts with "Mario C". The key will be the name, and the value the Cars. 
 		//We only keep the car list of the first name
-		//This sample not throw exception.
-		try{
-			people.stream()
-				.filter(p -> p.getName().startsWith("Mario C"))
-				.collect(Collectors.toMap(Person::getName, Person::getCars, (x,y) -> {return x;}))
-				.forEach((k,v) -> System.out.println(k + " => " + v));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
+		people.stream()
+			.filter(p -> p.getName().startsWith("Mario C"))
+			.collect(Collectors.toMap(Person::getName, Person::getCars, (x,y) -> {return x;}))
+			.forEach((k,v) -> System.out.println(k + " => " + v));
+
 		//Create a map, grouping by name. The key is the name, the value will be the List of persons
-		try {
-			people.stream()
-				.filter(p -> p.getName().startsWith("Mario C"))
-				.collect(Collectors.groupingBy(Person::getName))
-				.forEach((k,v) -> System.out.println(k + " => " + v));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		people.stream()
+			.filter(p -> p.getName().startsWith("Mario C"))
+			.collect(Collectors.groupingBy(Person::getName))
+			.forEach((k,v) -> System.out.println(k + " => " + v));
 		
 		//Create a map, grouping by name. The key is the name, the value will be the List of emails
-		try {
-			people.stream()
-				.filter(p -> p.getName().startsWith("Mario C"))
-				.collect(Collectors.groupingBy(
-						Person::getName, 
-						Collectors.mapping(Person::getMail, Collectors.toList())))
-				.forEach((k,v) -> System.out.println(k + " => " + v));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		people.stream()
+			.filter(p -> p.getName().startsWith("Mario C"))
+			.collect(Collectors.groupingBy(
+					Person::getName, 
+					Collectors.mapping(Person::getMail, Collectors.toList())))
+			.forEach((k,v) -> System.out.println(k + " => " + v));
 		
 		//Create a map, grouping by birthday (on february of 1987). The value will be the number of persons which birthday is that day
 		people.stream()
