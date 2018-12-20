@@ -3,6 +3,8 @@ package com.example.java8.collections;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Month;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -77,7 +79,6 @@ public class DataExtraction {
 		
 		
 		// Create a map with all names witch starts with "Mario C". The key will be the email, and the value the Cars 1
-///////////////////////////////////////////////
 		try {
 			people.stream()
 				.filter(p -> p.getName().startsWith("Mario C"))
@@ -115,20 +116,6 @@ public class DataExtraction {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-
-		// Create a map with all names witch starts with "Mario C". The key will be the name, and the value the Cars. 
-		//We merge the car list for each name
-		//This sample not throw exception.
-////////////////////////////////////////////////////
-		try{
-			people.stream()
-				.filter(p -> p.getName().startsWith("Mario C"))
-				.collect(Collectors.toMap(Person::getName, Person::getCars, (x,y) -> {x.addAll(y); return x;}))
-				.forEach((k,v) -> System.out.println(k + " => " + v));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
 		
 		//Create a map, grouping by name. The key is the name, the value will be the List of persons
 		try {
@@ -152,6 +139,33 @@ public class DataExtraction {
 			e.printStackTrace();
 		}
 		
+		//Create a map, grouping by birthday (on february of 1987). The value will be the number of persons which birthday is that day
+		people.stream()
+		.filter(p -> p.getBirthday().getYear()==1987)
+		.filter(p -> p.getBirthday().getMonth()==Month.FEBRUARY)
+	    .collect(Collectors.groupingBy(
+	            Person::getBirthday,
+	            Collectors.counting())).forEach((k,v) -> System.out.println(k + " => " + v));
+	
+		//Create a map, grouping by first chart of name. The values will be a list of emails
+		people.stream()
+			.collect(Collectors.groupingBy(p -> p.getName().charAt(0), Collectors.mapping(Person::getMail, Collectors.joining(", "))))
+			.forEach((k,v) -> System.out.println(k + " => " + v));
+		
+		//Create a map, grouping by first chart of name. The values will be the person which Birthday is later
+		people.stream()
+		.collect(Collectors.groupingBy(p -> p.getName().charAt(0), Collectors.maxBy(Comparator.comparing(Person::getBirthday))))
+		.forEach((k,v) -> System.out.println(k + " => " + v));
+
+		//Create a map, grouping by first chart of name. The values will be the sum of the number of cars
+		people.stream()
+		.collect(Collectors.groupingBy(p -> p.getName().charAt(0), Collectors.reducing(0, p -> p.getCars().size(), Integer::sum)))
+		.forEach((k,v) -> System.out.println(k + " => " + v));
+		
+		//Create a map, grouping by first chart of name. The values will be the avg of the years of birthday
+		people.stream()
+		.collect(Collectors.groupingBy(p -> p.getName().charAt(0), Collectors.averagingInt(p -> p.getBirthday().getYear())))
+		.forEach((k,v) -> System.out.println(k + " => " + v));
 	}
 
 }
