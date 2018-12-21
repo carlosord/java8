@@ -135,8 +135,5 @@ public class OptionalExample {
 				.map(Person::getName)
 				.orElseThrow(NoSuchElementException::new);
 	}
-	
-	private static String getText() {
-		return "Hello world";
-	}
+
 }
