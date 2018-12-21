@@ -46,9 +46,16 @@ public class OptionalExample {
 		OptionalDouble pricedouble = OptionalDouble.of(49.95d);
 		System.out.println(String.format("String: %s, Integer: %d, Long: %d, Double: %f", priceString.get(), priceInt.getAsInt(), pricelong.getAsLong(), pricedouble.getAsDouble()));
 		
-		System.out.println("Not empty person: " + getNotEmptyPerson().orElse(new Person()));
-		System.out.println("Create new person: " + getEmptyPerson().orElse(new Person()));
+		//It execute always the getNewPersonWithoutData method
+		System.out.println("Not empty person: " + getNotEmptyPerson().orElse(getNewPersonWithoutData()));
+		System.out.println("Create new person: " + getEmptyPerson().orElse(getNewPersonWithoutData()));
 		System.out.println("Not person: " + getEmptyPerson().orElse(getNewPerson()));
+		
+		System.out.println("\n");
+
+		//It only execute the getNewPersonWithoutData method when theObject is empty
+		System.out.println("Not empty person: " + getNotEmptyPerson().orElseGet(() -> getNewPersonWithoutData()));
+		System.out.println("create new person: " + getEmptyPerson().orElseGet(() -> getNewPersonWithoutData()));
 		
 		System.out.println("\n");
 		try {
@@ -96,6 +103,11 @@ public class OptionalExample {
 		return Optional.ofNullable(getNewPerson());
 	}
 	
+	private static Person getNewPersonWithoutData() {
+		System.out.println("-> new empty person");
+		return new Person();
+	}
+	
 	private static Person getNewPerson() {
 		return new Person("Elizabhet Esquinca","9903","elizabhet_esquinca@nomail.com","Tata,Porsche");
 	}
@@ -124,4 +136,7 @@ public class OptionalExample {
 				.orElseThrow(NoSuchElementException::new);
 	}
 	
+	private static String getText() {
+		return "Hello world";
+	}
 }
