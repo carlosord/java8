@@ -1,6 +1,7 @@
 package com.example.java8.localdatetime;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -56,7 +57,19 @@ public class LocalDateTimeExamples {
 		System.out.println("Period " + dateNow + " <-> " + myDate + ": " + periodo2 + " (" + periodo2.getYears() + " years)");
 		Period periodo3 = dateNow.until(myDate);
 		System.out.println("Period " + dateNow + " <-> " + myDate + ": " + periodo3 + " (" + periodo3.getYears() + " years)");
-				
+
+		System.out.println("\nDuration");
+		Duration duration = Duration.between(timeNow, myTime);
+		System.out.println("Duration " + myTime + " <-> " + timeNow + ": " + duration + " (" + duration.getSeconds() + " seconds)");
+
+		System.out.println("\nChronoUnit");
+		Long d = ChronoUnit.DECADES.between(LocalDate.of(1900, Month.JANUARY, 1), LocalDate.of(2019, Month.JANUARY, 1));
+		System.out.println("ChronoUnit decades: " + d);
+		Long m = ChronoUnit.MINUTES.between(LocalTime.of(12, 30, 0), LocalTime.of(13, 31, 10));
+		System.out.println("ChronoUnit minutes: " + m);
+		Long h = ChronoUnit.HOURS.between(LocalDateTime.of(1900, Month.JANUARY, 1, 10, 0, 0), LocalDateTime.of(2019, Month.JANUARY, 1, 10, 0, 0));
+		System.out.println("ChronoUnit hours: " + h);
+		
 		System.out.println("\nOperations");
 		System.out.println(myDate + " is after now?: " + myDate.isAfter(dateNow));
 		System.out.println("2 months after " + myDate + " is " + myDate.plusMonths(2));
