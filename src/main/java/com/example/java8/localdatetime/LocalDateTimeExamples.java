@@ -58,9 +58,11 @@ public class LocalDateTimeExamples {
 		Period periodo3 = dateNow.until(myDate);
 		System.out.println("Period " + dateNow + " <-> " + myDate + ": " + periodo3 + " (" + periodo3.getYears() + " years)");
 
+		System.out.println("\nDuration");
 		Duration duration = Duration.between(timeNow, myTime);
 		System.out.println("Duration " + myTime + " <-> " + timeNow + ": " + duration + " (" + duration.getSeconds() + " seconds)");
 
+		System.out.println("\nChronoUnit");
 		Long d = ChronoUnit.DECADES.between(LocalDate.of(1900, Month.JANUARY, 1), LocalDate.of(2019, Month.JANUARY, 1));
 		System.out.println("ChronoUnit decades: " + d);
 		Long m = ChronoUnit.MINUTES.between(LocalTime.of(12, 30, 0), LocalTime.of(13, 31, 10));
